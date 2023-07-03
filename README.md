@@ -150,20 +150,20 @@ $ pnpm deploy:contracts"
 
 ### Tasks
 
-#### Deploy Greeter
+#### Deploy Counter
 
-Deploy a new instance of the Greeter contract via a task:
+Deploy a new instance of the Counter contract via a task:
 
 ```sh
-$ pnpm task:deployGreeter --network ganache --greeting "Bonjour, le monde!"
+$ pnpm task:deployCounter --network localfhenix
 ```
 
-#### Set Greeting
+#### Add count
 
-Run the `setGreeting` task on the Ganache network:
+Run the `addCount` task on the LocalFhenix network:
 
 ```sh
-$ pnpm task:setGreeting --network ganache --greeting "Bonjour, le monde!" --account 3
+$ pnpm task:addCount --network localfhenix --amount 12 --account 3
 ```
 
 ## Tips
