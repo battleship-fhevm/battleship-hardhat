@@ -4,8 +4,8 @@ import type { TaskArguments } from "hardhat/types";
 
 import { createFheInstance } from "../utils/instance";
 
-task("task:add")
-  .addParam("amount", "Amount to add to the counter")
+task("task:addCount")
+  .addParam("amount", "Amount to add to the counter (plaintext number)")
   .addParam("account", "Specify which account [0, 9]")
   .setAction(async function (taskArguments: TaskArguments, hre) {
     const { ethers, deployments } = hre;
