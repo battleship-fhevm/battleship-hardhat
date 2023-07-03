@@ -182,21 +182,22 @@ on/off.
 
 ## Local development with Ganache
 
-### Install Ganache
+### Install LocalFhenix
+
+LocalFhenix is available through a docker image. To pull it, run:
 
 ```sh
-$ npm i -g ganache
+$ docker pull ghcr.io/fhenixprotocol/fhenix-devnet:0.1.5
 ```
 
 ### Run a Development Blockchain
 
 ```sh
-$ ganache -s test
+$ docker run -it -p 8545:8545 -p 6000:6000 \
+  --name localfhenix ghcr.io/fhenixprotocol/fhenix-devnet:0.1.5
 ```
 
-> The `-s test` passes a seed to the local chain and makes it deterministic
-
-Make sure to set the mnemonic in your `.env` file to that of the instance running with Ganache.
+Make sure to set the mnemonic in your `.env` file to that of the instance running with LocalFhenix.
 
 ## License
 
