@@ -6,6 +6,8 @@ import type { NetworkUserConfig } from "hardhat/types";
 import { resolve } from "path";
 
 import "./tasks/accounts";
+import "./tasks/add";
+import "./tasks/getCount";
 import "./tasks/greet";
 import "./tasks/taskDeploy";
 
@@ -60,7 +62,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
 }
 
 const config: HardhatUserConfig = {
-  defaultNetwork: "hardhat",
+  defaultNetwork: "localfhenix",
   namedAccounts: {
     deployer: 0,
   },
@@ -83,6 +85,16 @@ const config: HardhatUserConfig = {
     src: "./contracts",
   },
   networks: {
+    fhenix: {
+      accounts: { mnemonic },
+      chainId: 9000,
+      url: "https://fhenode.fhenix.io/evm",
+    },
+    localfhenix: {
+      accounts: { mnemonic },
+      chainId: 9000,
+      url: "http://localhost:8545",
+    },
     hardhat: {
       accounts: {
         mnemonic,
