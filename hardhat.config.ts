@@ -87,12 +87,12 @@ const config: HardhatUserConfig = {
   networks: {
     fhenix: {
       accounts: { mnemonic },
-      chainId: 9000,
-      url: "https://fhenode.fhenix.io/evm",
+      chainId: 5432,
+      url: "https://fhenode.fhenix.io/new/evm",
     },
     localfhenix: {
       accounts: { mnemonic },
-      chainId: 9000,
+      chainId: 5432,
       url: "http://localhost:8545",
     },
     hardhat: {

@@ -11,8 +11,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     log: true,
   });
 
+  const werc20 = await deploy("WrappingERC20", {
+    from: deployer,
+    args: ["TestShieldedToken", "TST"],
+    log: true,
+  });
+
   console.log(`Counter contract: `, counter.address);
+  console.log(`WrappingERC20 contract: `, werc20.address);
 };
+
 export default func;
 func.id = "deploy_counter";
 func.tags = ["Counter"];
