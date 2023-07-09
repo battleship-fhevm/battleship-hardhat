@@ -9,12 +9,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     args: [],
     log: true,
+    skipIfAlreadyDeployed: false,
   });
 
   const werc20 = await deploy("WrappingERC20", {
     from: deployer,
     args: ["TestShieldedToken", "TST"],
     log: true,
+    skipIfAlreadyDeployed: false,
   });
 
   console.log(`Counter contract: `, counter.address);
@@ -23,4 +25,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
 export default func;
 func.id = "deploy_counter";
-func.tags = ["Counter"];
+func.tags = ["Counter", "WrappingERC20"];
