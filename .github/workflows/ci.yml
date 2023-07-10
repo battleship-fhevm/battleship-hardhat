@@ -14,14 +14,14 @@ jobs:
   ci:
     services:
     # Label used to access the service container
-    secret:
-      # Docker Hub image
-      image: ghcr.io/fhenixprotocol/fhenix-devnet:0.1.5
-      ports:
-        # Opens tcp port
-        - 5000:5000
-        - 6000:6000
-        - 8545:8545
+      localfhenix:
+        # Docker Hub image
+        image: ghcr.io/fhenixprotocol/fhenix-devnet:0.1.5
+        ports:
+          # Opens tcp port
+          - 5000:5000
+          - 6000:6000
+          - 8545:8545
     runs-on: "ubuntu-latest"
     steps:
       - name: "Check out the repo"
