@@ -5,9 +5,7 @@ pragma solidity >=0.8.13 <0.9.0;
 import "fhevm/lib/TFHE.sol";
 
 contract Counter {
-    euint32 counter;
-
-    constructor() {}
+    euint32 private counter;
 
     function add(bytes calldata encryptedValue) public {
         euint32 value = TFHE.asEuint32(encryptedValue);
