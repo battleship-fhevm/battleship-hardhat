@@ -1,4 +1,3 @@
-import * as fhevm from "fhevmjs";
 import { task } from "hardhat/config";
 import type { TaskArguments } from "hardhat/types";
 
@@ -20,8 +19,6 @@ task("task:addCount")
 
     const { instance } = await createFheInstance(hre, Counter.address);
     const eAmount = instance.encrypt32(Number(taskArguments.amount));
-
-    console.log(`amount length: ${eAmount.length}`);
 
     await counter.connect(signers[Number(taskArguments.account)]).add(eAmount);
 
