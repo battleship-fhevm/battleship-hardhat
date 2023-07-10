@@ -11,12 +11,12 @@ describe("Unit tests", function () {
   before(async function () {
     this.signers = {} as Signers;
 
+    // get tokens from faucet if we're on localfhenix and don't have a balance
+    await getTokensFromFaucet();
+
     // deploy test contract
     const { counter, address } = await deployCounterFixture();
     this.counter = counter;
-
-    // get tokens from faucet if we're on localfhenix and don't have a balance
-    await getTokensFromFaucet();
 
     // initiate fhevmjs
     this.instance = await createFheInstance(hre, address);
