@@ -1,4 +1,3 @@
-import * as fhevm from "fhevmjs";
 import { task } from "hardhat/config";
 import type { TaskArguments } from "hardhat/types";
 

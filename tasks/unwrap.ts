@@ -1,8 +1,5 @@
-import * as fhevm from "fhevmjs";
 import { task } from "hardhat/config";
 import type { TaskArguments } from "hardhat/types";
-
-import { createFheInstance } from "../utils/instance";
 
 task("task:unwrap")
   .addParam("amount", "Amount of tokens to unwrap")

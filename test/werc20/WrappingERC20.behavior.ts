@@ -1,20 +1,18 @@
 import { expect } from "chai";
 import hre from "hardhat";
-import { setMaxIdleHTTPParsers } from "http";
 
 import { waitForBlock } from "../../utils/block";
 
 export function shouldBehaveLikeWrappingERC20(): void {
   const amountToWrap = 10;
   const amountToSend = 1;
-  const amountToUnwrap = 9;
 
   it("should wrap the correct amount of tokens", async function () {
     const signers = await hre.ethers.getSigners();
 
     await waitForBlock(hre);
 
-    let result = await this.werc20.connect(signers[0]).wrap(amountToWrap);
+    await this.werc20.connect(signers[0]).wrap(amountToWrap);
 
     await waitForBlock(hre);
 

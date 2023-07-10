@@ -5,13 +5,10 @@ import { HardhatRuntimeEnvironment } from "hardhat/types/runtime";
 export interface FheContract {
   instance: FhevmInstance;
   publicKey: Uint8Array;
-  token: EIP712;  
+  token: EIP712;
 }
 
-export async function createFheInstance(
-  hre: HardhatRuntimeEnvironment,
-  contractAddress: string,
-): Promise<FheContract> {
+export async function createFheInstance(hre: HardhatRuntimeEnvironment, contractAddress: string): Promise<FheContract> {
   const { ethers } = hre;
 
   const chainId = await hre.getChainId();

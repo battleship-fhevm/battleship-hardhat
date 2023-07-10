@@ -13,7 +13,7 @@ on:
 jobs:
   ci:
     services:
-    # Label used to access the service container
+      # Label used to access the service container
       localfhenix:
         # Docker Hub image
         image: ghcr.io/fhenixprotocol/fhenix-devnet:0.1.5
