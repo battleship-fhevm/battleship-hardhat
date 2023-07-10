@@ -1,7 +1,8 @@
 import { FhevmInstance, createInstance } from "fhevmjs";
 import { EIP712 } from "fhevmjs/lib/sdk/token";
 import { HardhatRuntimeEnvironment } from "hardhat/types/runtime";
-import {waitForBlock} from "./block";
+
+import { waitForBlock } from "./block";
 
 export interface FheContract {
   instance: FhevmInstance;
