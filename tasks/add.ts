@@ -16,9 +16,14 @@ task("task:addCount")
 
     const counter = await ethers.getContractAt("Counter", Counter.address);
 
+    console.log(`contract at: ${Counter.address}, for signer: ${signers[taskArguments.account].address}`);
+
     const { instance } = await createFheInstance(hre, Counter.address);
     const eAmount = instance.encrypt32(Number(taskArguments.amount));
-    await counter.connect(signers[taskArguments.account]).add(eAmount);
+
+    console.log(`amount length: ${eAmount.length}`);
+
+    await counter.connect(signers[Number(taskArguments.account)]).add(eAmount);
 
     console.log(`Added ${taskArguments.amount} to counter!`);
   });

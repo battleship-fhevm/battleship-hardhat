@@ -2,14 +2,13 @@ import { FhevmInstance, createInstance } from "fhevmjs";
 import { EIP712 } from "fhevmjs/lib/sdk/token";
 import { HardhatRuntimeEnvironment } from "hardhat/types/runtime";
 
-export async function createFheInstance(
-  hre: HardhatRuntimeEnvironment,
-  contractAddress: string,
-): Promise<{
+export interface FheContract {
   instance: FhevmInstance;
   publicKey: Uint8Array;
   token: EIP712;
-}> {
+}
+
+export async function createFheInstance(hre: HardhatRuntimeEnvironment, contractAddress: string): Promise<FheContract> {
   const { ethers } = hre;
 
   const chainId = await hre.getChainId();

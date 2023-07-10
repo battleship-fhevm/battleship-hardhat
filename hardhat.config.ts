@@ -6,10 +6,10 @@ import type { NetworkUserConfig } from "hardhat/types";
 import { resolve } from "path";
 
 import "./tasks/accounts";
-import "./tasks/add";
-import "./tasks/getCount";
-import "./tasks/greet";
-import "./tasks/taskDeploy";
+import "./tasks/getEncryptedBalance";
+import "./tasks/taskDeployWrappingERC20";
+import "./tasks/unwrap";
+import "./tasks/wrap";
 
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
@@ -87,12 +87,12 @@ const config: HardhatUserConfig = {
   networks: {
     fhenix: {
       accounts: { mnemonic },
-      chainId: 9000,
-      url: "https://fhenode.fhenix.io/evm",
+      chainId: 5432,
+      url: "https://fhenode.fhenix.io/new/evm",
     },
     localfhenix: {
-      accounts: { mnemonic },
-      chainId: 9000,
+      accounts: { mnemonic, path: "m/44'/60'/0'/0" },
+      chainId: 5432,
       url: "http://localhost:8545",
     },
     hardhat: {
@@ -134,7 +134,7 @@ const config: HardhatUserConfig = {
       // Disable the optimizer when debugging
       // https://hardhat.org/hardhat-network/#solidity-optimizer-support
       optimizer: {
-        enabled: true,
+        enabled: false,
         runs: 800,
       },
     },

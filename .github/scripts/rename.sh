@@ -32,7 +32,7 @@ sedi () {
 }
 
 # Rename instances of "PaulRBerg/foundry-template" to the new repo name in README.md for badges only
-sedi "/gitpod/ s|PaulRBerg/foundry-template|"${GITHUB_REPOSITORY}"|;" "README.md"
-sedi "/gitpod-badge/ s|PaulRBerg/foundry-template|"${GITHUB_REPOSITORY}"|;" "README.md"
-sedi "/gha/ s|PaulRBerg/foundry-template|"${GITHUB_REPOSITORY}"|;" "README.md"
-sedi "/gha-badge/ s|PaulRBerg/foundry-template|"${GITHUB_REPOSITORY}"|;" "README.md"
+sedi "/gitpod/ s|FhenixProtocol/hardhat-template|"${GITHUB_REPOSITORY}"|;" "README.md"
+sedi "/gitpod-badge/ s|FhenixProtocol/hardhat-template|"${GITHUB_REPOSITORY}"|;" "README.md"
+sedi "/gha/ s|FhenixProtocol/hardhat-template|"${GITHUB_REPOSITORY}"|;" "README.md"
+sedi "/gha-badge/ s|FhenixProtocol/hardhat-template|"${GITHUB_REPOSITORY}"|;" "README.md"
