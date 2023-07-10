@@ -52,8 +52,8 @@ jobs:
       - name: "Compile the contracts and generate the TypeChain bindings"
         run: "pnpm typechain"
 
-      - name: "Test the contracts and generate the coverage report"
-        run: "pnpm coverage"
+      - name: "Test the contracts"
+        run: "pnpm test"
 
       - name: "Add test summary"
         run: |
