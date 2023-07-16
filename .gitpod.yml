@@ -1,6 +1,8 @@
 image: "gitpod/workspace-node:latest"
 
 tasks:
+  - command: |
+      pnpm start:localfhenix
   - init: "pnpm install"
 
 vscode:
