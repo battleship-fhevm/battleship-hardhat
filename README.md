@@ -20,8 +20,8 @@ A Hardhat-based template for developing Solidity smart contracts, with sensible 
 
 ## Getting Started
 
-Click the [`Use this template`](https://github.com/fhenixprotocol/hardhat-template/generate) button at the top of the page to
-create a new repository with this repo as the initial state.
+Click the [`Use this template`](https://github.com/fhenixprotocol/hardhat-template/generate) button at the top of the
+page to create a new repository with this repo as the initial state.
 
 ## Features
 
