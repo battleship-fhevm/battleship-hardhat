@@ -15,7 +15,7 @@ jobs:
     services:
       # Label used to access the service container
       localfhenix:
-        # Docker Hub image
+        options: --name secretdev
         image: ghcr.io/fhenixprotocol/fhenix-devnet:0.1.6
         ports:
           # Opens tcp port
