@@ -84,10 +84,15 @@ const config: HardhatUserConfig = {
     src: "./contracts",
   },
   networks: {
-    fhenix: {
+    devnet: {
+      accounts: { mnemonic },
+      chainId: 8011,
+      url: "https://devnet.fhenix.io",
+    },
+    ci_localfhenix: {
       accounts: { mnemonic },
       chainId: 5432,
-      url: "https://fhenode.fhenix.io/new/evm",
+      url: "https://localfhenix:8545",
     },
     localfhenix: {
       accounts: { mnemonic, path: "m/44'/60'/0'/0" },

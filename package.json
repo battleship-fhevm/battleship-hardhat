@@ -76,8 +76,6 @@
     "prettier:check": "prettier --check \"**/*.{js,json,sol,ts,yml}\"",
     "prettier:write": "prettier --write \"**/*.{js,json,md,sol,ts,yml}\"",
     "hardhat": "hardhat",
-    "deployCounter": "hardhat task:deployCounter",
-    "deploywERC20": "hardhat task:deployWrappingERC20",
     "task:wrap": "hardhat task:wrap",
     "task:addCount": "hardhat task:addCount",
     "task:getCount": "hardhat task:getCount",
