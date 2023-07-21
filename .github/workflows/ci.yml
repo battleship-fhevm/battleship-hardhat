@@ -53,7 +53,7 @@ jobs:
         run: "pnpm typechain"
 
       - name: "Test the contracts"
-        run: "pnpm test --network ci_localfhenix"
+        run: "pnpm ci-test"
 
       - name: "Add test summary"
         run: |
