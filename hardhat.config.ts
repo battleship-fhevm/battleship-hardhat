@@ -85,7 +85,7 @@ const config: HardhatUserConfig = {
   networks: {
     devnet: {
       accounts: { mnemonic },
-      chainId: 8011,
+      chainId: 5432,
       url: "https://devnet.fhenix.io",
     },
     ci_localfhenix: {
