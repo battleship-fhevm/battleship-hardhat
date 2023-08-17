@@ -77,8 +77,8 @@ devDependencies:
     specifier: ^6.4.0
     version: 6.4.0
   fhevm:
-    specifier: ^0.1.3
-    version: 0.1.3
+    specifier: ^0.1.6
+    version: 0.1.6
   fhevmjs:
     specifier: ^0.0.5
     version: 0.0.5
@@ -1755,6 +1755,7 @@ packages:
   /amdefine@1.0.1:
     resolution: {integrity: sha512-S2Hw0TtNkMJhIabBwIojKL9YHO5T0n5eNqWJ7Lrlel/zDbftQpxpapi8tZs3X1HWa+u+QeydGmzzNU0m09+Rcg==}
     engines: {node: '>=0.4.2'}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -3102,8 +3103,10 @@ packages:
       reusify: 1.0.4
     dev: true
 
-  /fhevm@0.1.3:
-    resolution: {integrity: sha512-Jv+XP6bzpxu9YRFVSIUOvgcAKXkTKJBiFuEAaOM10hajExUHq+xeBKnWxAm+RmEyIuyC7eqi0ShrKlVEpIn0sQ==}
+  /fhevm@0.1.6:
+    resolution: {integrity: sha512-tZ+huE/K3TaTn6RGwIRcm4MJMUaYSJY4kArT4eTWM8UsfhsyiHYuAUVhhBfFWiBQX+KUSqNspJwoNyfY7aNeeQ==}
+    dependencies:
+      '@openzeppelin/contracts': 4.9.2
     dev: true
 
   /fhevmjs@0.0.5:
