@@ -24,6 +24,8 @@ describe("Unit tests", function () {
     // set admin account/signer
     const signers = await ethers.getSigners();
     this.signers.admin = signers[0];
+    this.signers.player1 = signers[0];
+    this.signers.player2 = signers[1];
 
     // wait for deployment block to finish
     await waitForBlock(hre);

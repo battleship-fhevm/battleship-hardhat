@@ -3,6 +3,7 @@
 pragma solidity >=0.8.13 <0.9.0;
 
 import "fhevm/lib/TFHE.sol";
+import "hardhat/console.sol";
 
 /*
 Ships: 5,4,3,3,2
@@ -42,8 +43,6 @@ contract Battleship {
         player1 = _player1;
         player2 = _player2;
         currentPlayer = player1;
-        gameEnded = false;
-        gameReady = false;
     }
 
     function placeShips(CellState[10][10] memory _ships) public onlyPlayers {

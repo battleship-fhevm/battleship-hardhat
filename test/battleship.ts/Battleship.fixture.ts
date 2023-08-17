@@ -8,7 +8,6 @@ import { waitForBlock } from "../../utils/block";
 export async function deployBattleshipFixture(): Promise<{ battleship: Battleship; address: string }> {
   const signers = await ethers.getSigners();
   const admin = signers[0];
-
   const battleshipFactory = await ethers.getContractFactory("Battleship");
   const battleship = await battleshipFactory.connect(admin).deploy(signers[0].address, signers[1].address);
   // await greeter.waitForDeployment();
@@ -23,6 +22,12 @@ export async function getTokensFromFaucet() {
     if ((await hre.ethers.provider.getBalance(signers[0].address)).toString() === "0") {
       console.log("Balance for signer is 0 - getting tokens from faucet");
       await axios.get(`http://localhost:6000/faucet?address=${signers[0].address}`);
+      await waitForBlock(hre);
+    }
+
+    if ((await hre.ethers.provider.getBalance(signers[1].address)).toString() === "0") {
+      console.log("Balance for signer is 0 - getting tokens from faucet");
+      await axios.get(`http://localhost:6000/faucet?address=${signers[1].address}`);
       await waitForBlock(hre);
     }
   }

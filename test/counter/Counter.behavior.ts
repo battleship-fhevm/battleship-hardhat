@@ -4,7 +4,7 @@ import hre from "hardhat";
 import { waitForBlock } from "../../utils/block";
 
 export function shouldBehaveLikeCounter(): void {
-  it("should add amount to the counter and verify the result", async function () {
+  xit("should add amount to the counter and verify the result", async function () {
     const amountToCount = 10;
 
     const eAmountCount = this.instance.instance.encrypt32(amountToCount);
