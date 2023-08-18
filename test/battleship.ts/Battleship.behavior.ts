@@ -411,6 +411,20 @@ export function shouldBehaveLikeBattleship(): void {
     await waitForBlock(hre);
 
     expect(player1Ready).to.equal(true);
-    expect(player2Ready).to.equal(true); // Player 2 hasn't placed ships yet
+    expect(player2Ready).to.equal(true);
+  });
+
+  it("should attack a valid cell location", async function () {
+    const player1Ready = await this.battleship.player1Ready();
+    const player2Ready = await this.battleship.player2Ready();
+    await waitForBlock(hre);
+
+    expect(player1Ready).to.equal(true);
+    expect(player2Ready).to.equal(true);
+
+    await this.battleship.connect(this.signers.player1).attack(0, 0);
+    await waitForBlock(hre);
+    const positionValue = await this.battleship.player2Board(0, 0);
+    expect(positionValue).to.equal(CellState.Hit);
   });
 }

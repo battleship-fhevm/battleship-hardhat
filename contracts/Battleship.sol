@@ -88,7 +88,7 @@ contract Battleship {
             targetBoard = player1Board;
         }
 
-        require(targetBoard[_x][_y] == CellState.Empty, "Cell already attacked");
+        // require(targetBoard[_x][_y] == CellState.Empty, "Cell already attacked");
 
         if (targetBoard[_x][_y] == CellState.Ship) {
             targetBoard[_x][_y] = CellState.Hit;
