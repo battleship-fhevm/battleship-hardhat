@@ -5,11 +5,6 @@ pragma solidity >=0.8.13 <0.9.0;
 import "fhevm/lib/TFHE.sol";
 import "hardhat/console.sol";
 
-/*
-Ships: 5,4,3,3,2
-board 10 x 10
-*/
-
 contract Battleship {
     address public player1;
     address public player2;
@@ -31,8 +26,8 @@ contract Battleship {
         Hit
     }
 
-    CellState[10][10] public player1Board;
-    CellState[10][10] public player2Board;
+    CellState[4][4] public player1Board;
+    CellState[4][4] public player2Board;
 
     modifier onlyPlayers() {
         require(msg.sender == player1 || msg.sender == player2, "Only players can call this function");
@@ -45,7 +40,7 @@ contract Battleship {
         currentPlayer = player1;
     }
 
-    function placeShips(CellState[10][10] memory _ships) public onlyPlayers {
+    function placeShips(CellState[4][4] memory _ships) public onlyPlayers {
         require(!gameEnded, "Game has ended");
         require(!gameReady, "Boards already set");
         require(verifyShipsPlaced(_ships), "Invalid amount of ships");
@@ -63,8 +58,8 @@ contract Battleship {
         }
     }
 
-    // Should be 17 in total: 5,4,3,3,2
-    function verifyShipsPlaced(CellState[10][10] memory _ships) public pure returns (bool) {
+    // Should be 6 ships in total
+    function verifyShipsPlaced(CellState[4][4] memory _ships) public pure returns (bool) {
         uint8 shipCount = 0;
         for (uint8 i = 0; i < BOARD_SIZE; i++) {
             for (uint8 j = 0; j < BOARD_SIZE; j++) {
@@ -73,9 +68,10 @@ contract Battleship {
                 }
             }
         }
-        return shipCount == 17;
+        return shipCount == 6;
     }
 
+    // need 6 ships placed.
     function verifyShipsPlacedFHE(bytes[4][4] calldata _ships) public view returns (bool) {
         euint8 shipCount = TFHE.asEuint8(0);
         for (uint8 i = 0; i < BOARD_SIZE; i++) {
@@ -86,36 +82,12 @@ contract Battleship {
         return TFHE.decrypt(shipCount) == 6;
     }
 
-    // function verifyShipsPlacedFHE3(bytes[3][3] calldata _ships) public view returns (uint8) {
-    //     euint8 shipCount = TFHE.asEuint8(0);
-    //     for (uint8 i = 0; i < 3; i++) {
-    //         for (uint8 j = 0; j < 3; j++) {
-    //             ebool b = TFHE.eq(TFHE.asEuint8(_ships[i][j]), TFHE.asEuint8(2));
-    //             shipCount = TFHE.add(shipCount, TFHE.cmux(b, TFHE.asEuint8(1), TFHE.asEuint8(0)));
-    //         }
-    //     }
-    //     return TFHE.decrypt(shipCount);
-
-    //     // TFHE.req(TFHE.eq(shipCount, TFHE.asEuint8(6)));
-    //     // return true;
-    //     // return shipCount == 17;
-    // }
-
-    // function verifyShipsPlacedFHE4(bytes calldata encryptedValue) public view returns (uint8) {
-    //     euint8 shipCount = TFHE.asEuint8(encryptedValue);
-    //     return TFHE.decrypt(shipCount);
-
-    //     // TFHE.req(TFHE.eq(shipCount, TFHE.asEuint8(6)));
-    //     // return true;
-    //     // return shipCount == 17;
-    // }
-
     function attack(uint8 _x, uint8 _y) public onlyPlayers {
         require(gameReady, "Game not ready");
         require(!gameEnded, "Game has ended");
         require(msg.sender == currentPlayer, "Not your turn");
 
-        CellState[10][10] storage targetBoard;
+        CellState[4][4] storage targetBoard;
         if (msg.sender == player1) {
             targetBoard = player2Board;
         } else {
@@ -131,7 +103,7 @@ contract Battleship {
             } else {
                 player1ShipsHit++;
             }
-            if (player1ShipsHit == 17 || player2ShipsHit == 17) {
+            if (player1ShipsHit == 6 || player2ShipsHit == 6) {
                 gameEnded = true;
                 winner = msg.sender;
             }

@@ -187,14 +187,14 @@ on/off.
 LocalFhenix is available through a docker image. To pull it, run:
 
 ```sh
-$ docker pull ghcr.io/fhenixprotocol/fhenix-devnet:0.1.5
+$ docker pull ghcr.io/fhenixprotocol/fhenix-devnet:0.1.6
 ```
 
 ### Run a Development Blockchain
 
 ```sh
 $ docker run -it -p 8545:8545 -p 6000:6000 \
-  --name localfhenix ghcr.io/fhenixprotocol/fhenix-devnet:0.1.5
+  --name localfhenix ghcr.io/fhenixprotocol/fhenix-devnet:0.1.6
 ```
 
 Make sure to set the mnemonic in your `.env` file to that of the instance running with LocalFhenix.
@@ -202,4 +202,5 @@ Make sure to set the mnemonic in your `.env` file to that of the instance runnin
 ## License
 
 This project is licensed under MIT.
+
 # battleship-fhevm
