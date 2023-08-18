@@ -20,7 +20,7 @@ contract Battleship {
     bool public player1Ready;
     bool public player2Ready;
 
-    uint8 public constant BOARD_SIZE = 10;
+    uint8 public constant BOARD_SIZE = 4;
     uint8 public player1ShipsHit;
     uint8 public player2ShipsHit;
 
@@ -75,6 +75,40 @@ contract Battleship {
         }
         return shipCount == 17;
     }
+
+    function verifyShipsPlacedFHE(bytes[4][4] calldata _ships) public view returns (bool) {
+        euint8 shipCount = TFHE.asEuint8(0);
+        for (uint8 i = 0; i < BOARD_SIZE; i++) {
+            for (uint8 j = 0; j < BOARD_SIZE; j++) {
+                shipCount = TFHE.add(shipCount, TFHE.asEuint8(TFHE.eq(TFHE.asEuint8(_ships[i][j]), TFHE.asEuint8(2))));
+            }
+        }
+        return TFHE.decrypt(shipCount) == 6;
+    }
+
+    // function verifyShipsPlacedFHE3(bytes[3][3] calldata _ships) public view returns (uint8) {
+    //     euint8 shipCount = TFHE.asEuint8(0);
+    //     for (uint8 i = 0; i < 3; i++) {
+    //         for (uint8 j = 0; j < 3; j++) {
+    //             ebool b = TFHE.eq(TFHE.asEuint8(_ships[i][j]), TFHE.asEuint8(2));
+    //             shipCount = TFHE.add(shipCount, TFHE.cmux(b, TFHE.asEuint8(1), TFHE.asEuint8(0)));
+    //         }
+    //     }
+    //     return TFHE.decrypt(shipCount);
+
+    //     // TFHE.req(TFHE.eq(shipCount, TFHE.asEuint8(6)));
+    //     // return true;
+    //     // return shipCount == 17;
+    // }
+
+    // function verifyShipsPlacedFHE4(bytes calldata encryptedValue) public view returns (uint8) {
+    //     euint8 shipCount = TFHE.asEuint8(encryptedValue);
+    //     return TFHE.decrypt(shipCount);
+
+    //     // TFHE.req(TFHE.eq(shipCount, TFHE.asEuint8(6)));
+    //     // return true;
+    //     // return shipCount == 17;
+    // }
 
     function attack(uint8 _x, uint8 _y) public onlyPlayers {
         require(gameReady, "Game not ready");

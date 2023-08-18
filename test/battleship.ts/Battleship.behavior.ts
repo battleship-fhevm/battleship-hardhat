@@ -1,4 +1,5 @@
 import { expect } from "chai";
+// import fs from "fs";
 import hre from "hardhat";
 
 import { waitForBlock } from "../../utils/block";
@@ -23,408 +24,593 @@ export function shouldBehaveLikeBattleship(): void {
   //   // expect(amount === amountToCount);
   // });
 
-  it("should verify that there are 17 ships placed", async function () {
-    const shipPlacement: number[][] = [
+  // it("should verify that there are 17 ships placed", async function () {
+  //   const shipPlacement: number[][] = [
+  //     [
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //   ];
+
+  //   const isBoardValid = await this.battleship.connect(this.signers.player1).verifyShipsPlaced(shipPlacement);
+  //   expect(isBoardValid).to.equal(true);
+  // });
+
+  // it("should fail that are only 16 ships placed", async function () {
+  //   const shipPlacement: number[][] = [
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //   ];
+
+  //   const isBoardValid = await this.battleship.connect(this.signers.player1).verifyShipsPlaced(shipPlacement);
+  //   expect(isBoardValid).to.equal(false);
+  // });
+
+  // it("should place ships and check game readiness", async function () {
+  //   const shipPlacement: number[][] = [
+  //     [
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Ship,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //     [
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //       CellState.Empty,
+  //     ],
+  //   ];
+
+  //   await this.battleship.connect(this.signers.player1).placeShips(shipPlacement);
+  //   await this.battleship.connect(this.signers.player2).placeShips(shipPlacement);
+  //   await waitForBlock(hre);
+  //   const player1Ready = await this.battleship.player1Ready();
+  //   const player2Ready = await this.battleship.player2Ready();
+  //   await waitForBlock(hre);
+
+  //   expect(player1Ready).to.equal(true);
+  //   expect(player2Ready).to.equal(true);
+  // });
+
+  // it("should attack a valid cell location", async function () {
+  //   const player1Ready = await this.battleship.player1Ready();
+  //   const player2Ready = await this.battleship.player2Ready();
+  //   await waitForBlock(hre);
+
+  //   expect(player1Ready).to.equal(true);
+  //   expect(player2Ready).to.equal(true);
+
+  //   await this.battleship.connect(this.signers.player1).attack(0, 0);
+  //   await waitForBlock(hre);
+  //   const positionValue = await this.battleship.player2Board(0, 0);
+  //   expect(positionValue).to.equal(CellState.Hit);
+  // });
+
+  it("should decrypt", async function () {
+    const test = await this.battleship
+      .connect(this.signers.player1)
+      .verifyShipsPlacedFHE4(this.instance.instance.encrypt8(2));
+    expect(test).to.equal(2);
+  });
+
+  it("should place encryptedships and check game readiness", async function () {
+    console.log("called");
+    // // 1 is empty
+    // const emptyState = toHexString(this.instance.instance.encrypt8(1));
+    // // 2 is ship
+    // const shipState = toHexString(this.instance.instance.encrypt8(2));
+
+    // console.log("emptyState", emptyState);
+    // console.log("shipState", shipState);
+    const toHexString = (bytes: any) =>
+      bytes.reduce((str: any, byte: any) => str + byte.toString(16).padStart(2, "0"), "");
+
+    const shipPlacement: string[][] = [
       [
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
+        "0x" + toHexString(this.instance.instance.encrypt8(2)),
+        "0x" + toHexString(this.instance.instance.encrypt8(2)),
+        "0x" + toHexString(this.instance.instance.encrypt8(2)),
       ],
       [
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
+        "0x" + toHexString(this.instance.instance.encrypt8(2)),
+        "0x" + toHexString(this.instance.instance.encrypt8(2)),
+        "0x" + toHexString(this.instance.instance.encrypt8(2)),
       ],
       [
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-      ],
-      [
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
+        "0x" + toHexString(this.instance.instance.encrypt8(1)),
+        "0x" + toHexString(this.instance.instance.encrypt8(1)),
+        "0x" + toHexString(this.instance.instance.encrypt8(1)),
       ],
     ];
 
-    const isBoardValid = await this.battleship.connect(this.signers.player1).verifyShipsPlaced(shipPlacement);
-    expect(isBoardValid).to.equal(true);
+    // const outputPath = "output.txt";
+    // fs.writeFile(outputPath, shipPlacement.toString(), (err) => {
+    //   if (err) {
+    //     console.log("error");
+    //   } else {
+    //     console.log(`Content exported to ${outputPath}`);
+    //   }
+    // });
+
+    // const shipPlacement: Uint8Array[][] = [
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //   ],
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(2)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //   ],
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //   ],
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //   ],
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //   ],
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //   ],
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //   ],
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //   ],
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //   ],
+    //   [
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //     toHexString(this.instance.instance.encrypt8(1)),
+    //   ],
+    // ];
+
+    console.log("shipPlacement", shipPlacement);
+
+    const isBoardValid = await this.battleship.connect(this.signers.player1).verifyShipsPlacedFHE3(shipPlacement);
+    // expect(isBoardValid).to.equal(true);
+    expect(isBoardValid).to.equal(6);
   });
 
-  it("should fail that are only 16 ships placed", async function () {
-    const shipPlacement: number[][] = [
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-      ],
-      [
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-    ];
+  // it("should not be able to attack if not player's turn", async function () {
+  // });
 
-    const isBoardValid = await this.battleship.connect(this.signers.player1).verifyShipsPlaced(shipPlacement);
-    expect(isBoardValid).to.equal(false);
-  });
+  // should not be able to attack a position already attacked
 
-  it("should place ships and check game readiness", async function () {
-    const shipPlacement: number[][] = [
-      [
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-      ],
-      [
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Ship,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-      [
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-        CellState.Empty,
-      ],
-    ];
+  // should not be able to attack a position already missed
 
-    await this.battleship.connect(this.signers.player1).placeShips(shipPlacement);
-    await this.battleship.connect(this.signers.player2).placeShips(shipPlacement);
-    await waitForBlock(hre);
-    const player1Ready = await this.battleship.player1Ready();
-    const player2Ready = await this.battleship.player2Ready();
-    await waitForBlock(hre);
-
-    expect(player1Ready).to.equal(true);
-    expect(player2Ready).to.equal(true);
-  });
-
-  it("should attack a valid cell location", async function () {
-    const player1Ready = await this.battleship.player1Ready();
-    const player2Ready = await this.battleship.player2Ready();
-    await waitForBlock(hre);
-
-    expect(player1Ready).to.equal(true);
-    expect(player2Ready).to.equal(true);
-
-    await this.battleship.connect(this.signers.player1).attack(0, 0);
-    await waitForBlock(hre);
-    const positionValue = await this.battleship.player2Board(0, 0);
-    expect(positionValue).to.equal(CellState.Hit);
-  });
+  // game ends when 17 ships are hit by a player
 }
