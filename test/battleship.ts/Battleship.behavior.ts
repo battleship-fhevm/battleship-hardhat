@@ -76,7 +76,7 @@ export function shouldBehaveLikeBattleship(): void {
       ],
     ];
 
-    console.log("shipPlacement", shipPlacement);
+    // console.log("shipPlacement", shipPlacement);
 
     const isBoardValid = await this.battleship.connect(this.signers.player1).verifyShipsPlacedFHE(shipPlacement);
     expect(isBoardValid).to.equal(true);
