@@ -93,11 +93,11 @@ contract Battleship {
         if (targetBoard[_x][_y] == CellState.Ship) {
             targetBoard[_x][_y] = CellState.Hit;
             if (msg.sender == player1) {
-                player1ShipsHit++;
-            } else {
                 player2ShipsHit++;
+            } else {
+                player1ShipsHit++;
             }
-            if (checkWin()) {
+            if (player1ShipsHit == 17 || player2ShipsHit == 17) {
                 gameEnded = true;
                 winner = msg.sender;
             }
@@ -110,9 +110,5 @@ contract Battleship {
         } else {
             currentPlayer = player1;
         }
-    }
-
-    function checkWin() internal view returns (bool) {
-        return player1ShipsHit == 17 || player2ShipsHit == 17;
     }
 }
