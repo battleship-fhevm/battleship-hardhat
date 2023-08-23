@@ -10,7 +10,6 @@ export async function deployBattleshipFixture(): Promise<{ battleship: Battleshi
   const admin = signers[0];
   const battleshipFactory = await ethers.getContractFactory("Battleship");
   const battleship = await battleshipFactory.connect(admin).deploy(signers[0].address, signers[1].address);
-  // await greeter.waitForDeployment();
   const address = await battleship.getAddress();
   return { battleship, address };
 }
