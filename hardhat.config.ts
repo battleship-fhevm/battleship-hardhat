@@ -60,7 +60,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
 }
 
 const config: HardhatUserConfig = {
-  defaultNetwork: "localfhenix",
+  defaultNetwork: "zamaDevnet",
   namedAccounts: {
     deployer: 0,
   },
@@ -83,6 +83,11 @@ const config: HardhatUserConfig = {
     src: "./contracts",
   },
   networks: {
+    zamaDevnet: {
+      accounts: { mnemonic },
+      chainId: 8009,
+      url: "https://devnet.zama.ai",
+    },
     devnet: {
       accounts: { mnemonic },
       chainId: 5432,
