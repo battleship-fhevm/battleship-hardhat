@@ -15,19 +15,18 @@ contract Battleship {
     bool public player1Ready;
     bool public player2Ready;
 
-    uint8 public constant BOARD_SIZE = 4;
+    uint8 public constant BOARD_SIZE = 4; // max size is 5
     uint8 public player1ShipsHit;
     uint8 public player2ShipsHit;
 
-    enum CellState {
-        Empty,
-        Ship,
-        Miss,
-        Hit
-    }
+    // 0 = empty
+    // 1 = ship
+    // 2 = attacked
+    euint8[4][4] public player1Board;
+    euint8[4][4] public player2Board;
 
-    CellState[4][4] public player1Board;
-    CellState[4][4] public player2Board;
+    event Attack(uint8 x, uint8 y, address victim, bool hit);
+    event GameEnded(address winner);
 
     modifier onlyPlayers() {
         require(msg.sender == player1 || msg.sender == player2, "Only players can call this function");
@@ -40,16 +39,49 @@ contract Battleship {
         currentPlayer = player1;
     }
 
-    function placeShips(CellState[4][4] memory _ships) public onlyPlayers {
+    function placeShips(bytes calldata encryptedValue) public onlyPlayers {
         require(!gameEnded, "Game has ended");
         require(!gameReady, "Boards already set");
-        require(verifyShipsPlaced(_ships), "Invalid amount of ships");
+
+        // values are encoded as bits from right to left
+        // 0 = empty
+        // 1 = ship
+        //
+        // example input:
+        //
+        // 0010001011001100
+        //
+        // results in the following board:
+        //
+        // 0 0 1 1
+        // 0 0 1 1
+        // 0 1 0 0
+        // 0 1 0 0
+
+        euint32 packedData = TFHE.asEuint32(encryptedValue);
+        euint8[BOARD_SIZE][BOARD_SIZE] storage board;
+        if(msg.sender == player1  ){
+            board = player1Board;
+        } else {
+            board = player2Board;
+        }
+        euint8 mask = TFHE.asEuint8(1);
+        euint8 shipCount = TFHE.asEuint8(0);
+
+        for (uint256 i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
+          euint8 value = TFHE.asEuint8(TFHE.and(packedData, mask));
+          board[i / BOARD_SIZE][i % BOARD_SIZE] = value;
+          shipCount = TFHE.add(shipCount, value);
+
+          packedData = TFHE.shr(packedData, uint8(1));
+        }
+
+        // Make sure the user created 6 ships
+        TFHE.req(TFHE.eq(shipCount, uint8(6)));
 
         if (msg.sender == player1) {
-            player1Board = _ships;
             player1Ready = true;
         } else {
-            player2Board = _ships;
             player2Ready = true;
         }
 
@@ -58,58 +90,42 @@ contract Battleship {
         }
     }
 
-    // Should be 6 ships in total
-    function verifyShipsPlaced(CellState[4][4] memory _ships) public pure returns (bool) {
-        uint8 shipCount = 0;
-        for (uint8 i = 0; i < BOARD_SIZE; i++) {
-            for (uint8 j = 0; j < BOARD_SIZE; j++) {
-                if (_ships[i][j] == CellState.Ship) {
-                    shipCount++;
-                }
-            }
-        }
-        return shipCount == 6;
-    }
-
-    // need 6 ships placed.
-    function verifyShipsPlacedFHE(bytes[4][4] calldata _ships) public view returns (bool) {
-        euint8 shipCount = TFHE.asEuint8(0);
-        for (uint8 i = 0; i < BOARD_SIZE; i++) {
-            for (uint8 j = 0; j < BOARD_SIZE; j++) {
-                shipCount = TFHE.add(shipCount, TFHE.asEuint8(TFHE.eq(TFHE.asEuint8(_ships[i][j]), TFHE.asEuint8(2))));
-            }
-        }
-        return TFHE.decrypt(shipCount) == 6;
-    }
-
     function attack(uint8 _x, uint8 _y) public onlyPlayers {
         require(gameReady, "Game not ready");
         require(!gameEnded, "Game has ended");
         require(msg.sender == currentPlayer, "Not your turn");
 
-        CellState[4][4] storage targetBoard;
+        euint8[4][4] storage targetBoard;
         if (msg.sender == player1) {
             targetBoard = player2Board;
         } else {
             targetBoard = player1Board;
         }
 
-        // require(targetBoard[_x][_y] == CellState.Empty, "Cell already attacked");
+        uint8 target = TFHE.decrypt(targetBoard[_x][_y]);
+        require(target < 2, "Already attacked this cell");
 
-        if (targetBoard[_x][_y] == CellState.Ship) {
-            targetBoard[_x][_y] = CellState.Hit;
+        if (target == 1) {
             if (msg.sender == player1) {
                 player2ShipsHit++;
+                emit Attack(_x, _y, player2, true);
             } else {
                 player1ShipsHit++;
+                emit Attack(_x, _y, player1, true);
             }
             if (player1ShipsHit == 6 || player2ShipsHit == 6) {
                 gameEnded = true;
                 winner = msg.sender;
+                emit GameEnded(msg.sender);
             }
         } else {
-            targetBoard[_x][_y] = CellState.Miss;
+            if (msg.sender == player1) {
+                emit Attack(_x, _y, player2, false);
+            } else {
+                emit Attack(_x, _y, player1, false);
+            }
         }
+        targetBoard[_x][_y] = TFHE.asEuint8(2);
 
         if (currentPlayer == player1) {
             currentPlayer = player2;
